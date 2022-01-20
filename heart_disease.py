@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, roc_auc_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, BernoulliNB, CategoricalNB
+from sklearn import svm
 from sklearn import neighbors
 from sklearn.tree import DecisionTreeClassifier
 from matplotlib import pyplot
@@ -69,13 +70,13 @@ x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
 
 Option 1: Logistic Regression
 
-# Penalties are l1, l2, elasticnet or none. Default is l2
-# Solvers can be chosen according to the penalty added. They are: 
-# newton-cg - [l2, none]
-# lbfgs - [l2, none]
-# liblinear - [l1, l2]
-# sag - [l2, none]
-# saga - [elasticnet, l1, l2, none]
+Penalties are l1, l2, elasticnet or none. Default is l2
+Solvers can be chosen according to the penalty added. They are: 
+newton-cg - [l2, none]
+lbfgs - [l2, none]
+liblinear - [l1, l2]
+sag - [l2, none]
+saga - [elasticnet, l1, l2, none]
 
 classifier=LogisticRegression(penalty='l2',random_state=0,solver='newton-cg')
 
@@ -94,9 +95,20 @@ weights='uniform' # uniform or distance
 
 classifier=neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
 
+Option 5: Support Vector Machine Classifier
+
+Several kernel options, such as:
+linear
+poly
+rbf (standard if none is given)
+sigmoid
+precomputed
+
+classifier=svm.SVC(probability=True, kernel='rbf')
+
 """
 
-classifier=LogisticRegression(penalty='l2',random_state=0,solver='newton-cg')
+classifier=svm.SVC(probability=True, kernel='rbf')
 
 # Training the model with the training dataset
 
