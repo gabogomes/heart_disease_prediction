@@ -4,7 +4,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, roc_auc_score
-from sklearn import svm
+from sklearn import neighbors
 from matplotlib import pyplot
 
 dataset=pd.read_csv("../dataset/heart_disease_data.csv")
@@ -65,16 +65,12 @@ x=np.array(ct.fit_transform(x))
 
 x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
 
-# Creating an object of the Support Vector Classifier
+# Creating an object of the K-NN Classifier
 
-#Several kernel options, such as:
-#linear
-#poly
-#rbf (standard if none is given)
-#sigmoid
-#precomputed
+n_neighbors=20
+weights='uniform' # uniform or distance
 
-classifier=svm.SVC(probability=True, kernel='rbf')
+classifier=neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
 
 # Training the model with the training dataset
 

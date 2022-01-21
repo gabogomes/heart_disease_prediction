@@ -118,7 +118,10 @@ classifier=RandomForestClassifier(max_samples='None', bootstrap='True', n_estima
 
 """
 
-classifier=RandomForestClassifier(n_estimators=100, bootstrap='True')
+n_neighbors=20
+weights='uniform' # uniform or distance
+
+classifier=neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
 
 # Training the model with the training dataset
 
