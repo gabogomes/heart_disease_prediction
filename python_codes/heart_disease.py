@@ -9,6 +9,7 @@ from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, Bernoul
 from sklearn import svm
 from sklearn import neighbors
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 from matplotlib import pyplot
 
 dataset=pd.read_csv("../dataset/heart_disease_data.csv")
@@ -106,9 +107,18 @@ precomputed
 
 classifier=svm.SVC(probability=True, kernel='rbf')
 
+Option 6: Random Forest Ensemble Classifier
+
+Ensemble of decision trees. If bootstrap=True (default), each tree uses a sub-sample of the total sample size, where the
+size of the sub-samples is controled with max_samples (default='None', corresponding to X.shape[0] samples). Otherwise, 
+if bootstrap=False , the whole dataset is used to build each tree. n_estimators is the number of decision trees. Default 
+number is 100. criterion can be gini (default) or entropy.
+
+classifier=RandomForestClassifier(max_samples='None', bootstrap='True', n_estimators=100)
+
 """
 
-classifier=svm.SVC(probability=True, kernel='rbf')
+classifier=RandomForestClassifier(n_estimators=100, bootstrap='True')
 
 # Training the model with the training dataset
 
