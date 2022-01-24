@@ -40,11 +40,6 @@ dataset["ExerciseAngina"]=LabelEncoder().fit_transform(dataset["ExerciseAngina"]
 x=dataset.iloc[:,:-1].values
 y=dataset.iloc[:,-1].values
 
-# Performing variable standardization or normalization to improve results
-
-scaler=StandardScaler()
-x[:,[0,3,4,7,9]]=scaler.fit_transform(x[:,[0,3,4,7,9]])
-
 # Changing the order of the columns so that the columns to be One-Hot-Encoded are 
 # all to the left (remind that passthrough keeps only columns to the right!)
 
@@ -64,6 +59,14 @@ x=np.array(ct.fit_transform(x))
 # Train-Test split
 
 x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
+
+# Performing variable standardization or normalization to improve results. 
+# Needs to be done after train-test-split so that test set results do not impact
+# the training set results and cause bias
+
+scaler=StandardScaler()
+x_train[:,[13,14,15,16,17]]=scaler.fit_transform(x_train[:,[13,14,15,16,17]])
+x_test[:,[13,14,15,16,17]]=scaler.fit_transform(x_test[:,[13,14,15,16,17]])
 
 # Creating an object of the K-NN Classifier
 
