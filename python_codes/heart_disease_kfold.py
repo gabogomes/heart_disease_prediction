@@ -3,14 +3,9 @@ import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, roc_auc_score
 from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import GaussianNB, MultinomialNB, ComplementNB, BernoulliNB, CategoricalNB
-from sklearn import svm
-from sklearn import neighbors
+from sklearn.naive_bayes import GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from matplotlib import pyplot
 
 dataset=pd.read_csv("../dataset/heart_disease_data.csv")
 
@@ -106,6 +101,7 @@ classifier_lr_l1=LogisticRegression(penalty='l1',random_state=0,solver='liblinea
 classifier_lr_elasticnet=LogisticRegression(penalty='elasticnet',random_state=0,solver='sag')
 classifier_decision_trees=DecisionTreeClassifier(criterion='entropy',random_state=0)
 classifier_naive_bayes=GaussianNB()
+classifier_naive_bayes_bernoulli=BernoulliNB()
 
 
 
@@ -118,7 +114,7 @@ Using K-Fold Cross Validation method
 
 cv_number=20
 
-classifier_list=[classifier_lr_pure, classifier_lr_l1, classifier_lr_l2, classifier_decision_trees, classifier_naive_bayes]
+classifier_list=[classifier_lr_pure, classifier_lr_l1, classifier_lr_l2, classifier_decision_trees, classifier_naive_bayes, classifier_naive_bayes_bernoulli]
 
 scores_list=[]
 
@@ -147,11 +143,13 @@ results_summary={'Mean accuracy': scores_list[0:len(scores_list)-7:8], 'Mean acc
 'Mean Neg Log Loss score': scores_list[4:len(scores_list)-3:8], 'Mean Neg Log Loss std dev': scores_list[5:len(scores_list)-2:8],
 'Mean ROC AUC score': scores_list[6:len(scores_list)-1:8], 'Mean ROC AUC std dev': scores_list[7:len(scores_list):8]}
 
-results_dataset_summary=pd.DataFrame(data=results_summary, index=['Pure Linear', 'L1 LR', 'L2 LR', 'Decision Trees', 'Gaussian NB'])
+results_dataset_summary=pd.DataFrame(data=results_summary, index=['Pure Linear', 'L1 LR', 'L2 LR', 'Decision Trees', 'Gaussian NB', 'Bernoulli NB'])
 
 print(results_dataset_summary)
 
 """ Evaluating model performance without cross validation
+
+from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, roc_auc_score
 
 # Training the model with the training dataset
 
