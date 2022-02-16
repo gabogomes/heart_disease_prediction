@@ -75,28 +75,48 @@ plt.savefig("../results/charts/pie_charts_categorial_variables.pdf")
 
 fig, ax = plt.subplots(1,1)
 
-ax.pie(sizes_ST_slope, labels=labels_ST_slope, autopct='%1.2f%%', shadow=True, startangle=90)
+ax.pie(sizes_ST_slope, autopct='%1.2f%%', shadow=True, startangle=90)
 ax.axis('equal')
+ax.set_title('ST Slope')
+ax.legend(labels_ST_slope,
+          title="ST Slope",
+          loc="lower right")
+
 plt.tight_layout()
 plt.savefig("../results/charts/ST_slope_pie_chart.pdf")
 
 fig, ax = plt.subplots(1,1)
 
-ax.pie(sizes_sex, labels=labels_sex, autopct='%1.2f%%', shadow=True, startangle=90)
+ax.pie(sizes_sex, autopct='%1.2f%%', shadow=True, startangle=90)
 ax.axis('equal')
+ax.set_title('Gender')
+ax.legend(labels_sex,
+          title="Gender",
+          loc="lower right")
+
 plt.tight_layout()
 plt.savefig("../results/charts/sex_pie_chart.pdf")
 
 fig, ax = plt.subplots(1,1)
 
-ax.pie(sizes_chest_pain, labels=labels_chest_pain_type_unique, autopct='%1.2f%%', shadow=True, startangle=90)
+ax.pie(sizes_chest_pain, autopct='%1.2f%%', shadow=True, startangle=90)
 ax.axis('equal')
+ax.set_title('Chest Pain Type')
+ax.legend(labels_chest_pain_type_unique,
+          title="Chest Pain Type",
+          loc="lower right")
+
 plt.tight_layout()
 plt.savefig("../results/charts/chest_pain_type_pie_chart.pdf")
 
 fig, ax = plt.subplots(1,1)
 
-ax.pie(sizes_ECG, labels=labels_resting_ECG_unique, autopct='%1.2f%%', shadow=True, startangle=90)
+ax.pie(sizes_ECG, autopct='%1.2f%%', shadow=True, startangle=90)
 ax.axis('equal')
+ax.set_title('Resting ECG')
+ax.legend(labels_resting_ECG_unique,
+          title="Resting ECG categories",
+          loc="lower right")
+
 plt.tight_layout()
 plt.savefig("../results/charts/Resting_ECG_pie_chart.pdf")
