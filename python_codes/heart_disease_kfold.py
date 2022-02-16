@@ -106,7 +106,7 @@ results_summary={'Model': models_list, 'Mean accuracy': scores_list[0:len(scores
 'Mean Neg Log Loss score': scores_list[4:len(scores_list)-3:8], 'Mean Neg Log Loss std dev': scores_list[5:len(scores_list)-2:8],
 'Mean ROC AUC score': scores_list[6:len(scores_list)-1:8], 'Mean ROC AUC std dev': scores_list[7:len(scores_list):8]}
 
-results_dataset_summary=pd.DataFrame(data=results_summary, index=['Pure Linear', 'L1 LR', 'L2 LR', 'Decision Trees', 'Gaussian NB', 'Bernoulli NB'])
+results_dataset_summary=pd.DataFrame(data=results_summary)#, index=['Pure Linear', 'L1 LR', 'L2 LR', 'Decision Trees', 'Gaussian NB', 'Bernoulli NB'])
 
 print(results_dataset_summary.head(6))
 
@@ -115,7 +115,7 @@ ax.axis('tight')
 ax.axis('off')
 the_table = ax.table(cellText=results_dataset_summary.values,colLabels=results_dataset_summary.columns,loc='center')
 
-pp=PdfPages("../figures/summary_kfold_methods_results.pdf")
+pp=PdfPages("../results/model_performance/summary_kfold_methods_results.pdf")
 pp.savefig(fig, bbox_inches='tight')
 pp.close()
 

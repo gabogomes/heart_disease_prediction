@@ -73,4 +73,4 @@ ax3.set_xlabel("Maximum Heart Rate")
 
 plt.tight_layout()
 
-plt.savefig("../figures/histogram_continuous_variables.pdf")
+plt.savefig("../results/charts/histogram_continuous_variables.pdf")
