@@ -120,6 +120,8 @@ scores_list=[]
 
 for classifier in classifier_list:
 
+# See more scoring metrics for classification in https://scikit-learn.org/stable/modules/model_evaluation.html
+
     scores_accuracy_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="accuracy")).mean()
     scores_accuracy_std=(cross_val_score(classifier, x, y, cv=cv_number, scoring="accuracy")).std()
     scores_f1_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="f1")).mean()
