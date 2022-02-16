@@ -96,7 +96,7 @@ results_summary={'Mean accuracy': scores_list[0:len(scores_list)-7:8], 'Mean acc
 
 results_dataset_summary=pd.DataFrame(data=results_summary, index=['Pure Linear', 'L1 LR', 'L2 LR', 'Decision Trees', 'Gaussian NB', 'Bernoulli NB'])
 
-print(results_dataset_summary)
+print(results_dataset_summary.head(6))
 
 """ Evaluating model performance without cross validation
 
