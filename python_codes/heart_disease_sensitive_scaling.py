@@ -2,11 +2,13 @@ import pandas as pd
 import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, roc_auc_score
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve, roc_auc_score
 from sklearn import neighbors
 from sklearn import svm
 from matplotlib import pyplot
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
 dataset=pd.read_csv("../dataset/heart_disease_data.csv")
 
@@ -107,9 +109,9 @@ for classifier in [classifier_knn_uniform, classifier_knn_distance, classifier_s
     pyplot.plot(model_roc_curve_fpr, model_roc_curve_tpr, '--o',label=labels[iflag])
     iflag+=1
 
-roc_summary={'ROC AUC': roc_auc_store}
+roc_summary={'Model': labels, 'ROC AUC': roc_auc_store}
 
-roc_summary_df=pd.DataFrame(data=roc_summary, index=labels)
+roc_summary_df=pd.DataFrame(data=roc_summary)
 
 print(roc_summary_df.head(5))
 
@@ -118,3 +120,12 @@ pyplot.ylabel('True Positive Rate')
 pyplot.legend()
 pyplot.tight_layout()
 pyplot.savefig("../figures/comparison_scaling_sensitive_methods.pdf")
+
+fig, ax =plt.subplots(figsize=(12,4))
+ax.axis('tight')
+ax.axis('off')
+the_table = ax.table(cellText=roc_summary_df.values,colLabels=roc_summary_df.columns,loc='center')
+
+pp=PdfPages("../figures/summary_knn_svc_classifiers_roc.pdf")
+pp.savefig(fig, bbox_inches='tight')
+pp.close()

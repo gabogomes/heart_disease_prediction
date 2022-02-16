@@ -6,6 +6,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB, BernoulliNB
 from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
 dataset=pd.read_csv("../dataset/heart_disease_data.csv")
 
@@ -105,6 +107,15 @@ results_summary={'Mean accuracy': scores_list[0:len(scores_list)-7:8], 'Mean acc
 results_dataset_summary=pd.DataFrame(data=results_summary, index=['Pure Linear', 'L1 LR', 'L2 LR', 'Decision Trees', 'Gaussian NB', 'Bernoulli NB'])
 
 print(results_dataset_summary.head(6))
+
+fig, ax =plt.subplots(figsize=(12,4))
+ax.axis('tight')
+ax.axis('off')
+the_table = ax.table(cellText=results_dataset_summary.values,colLabels=results_dataset_summary.columns,loc='center')
+
+pp=PdfPages("../figures/summary_kfold_methods_results.pdf")
+pp.savefig(fig, bbox_inches='tight')
+pp.close()
 
 """ Evaluating model performance without cross validation
 
