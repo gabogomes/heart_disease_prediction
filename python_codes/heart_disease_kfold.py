@@ -45,72 +45,21 @@ y=dataset.iloc[:,-1].values
 
 x[:,0:12]=x[:,[2,6,10,1,5,8,0,3,4,7,9]]
 
-"""
-
-First three (2,6,10) have more than 2 possible values , other three (1,5,8) are binary and remaining are numerical
-
-"""
+# First three (2,6,10) have more than 2 possible values , other three (1,5,8) are binary and remaining are numerical
 
 # Applying One-Hot-Encoding to the dataset and making sure it is an array
 
 ct=ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [0,1,2])],remainder='passthrough')
 x=np.array(ct.fit_transform(x))
 
-# Train-Test split
-
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
-
-# Choosing the classifier
-
-"""
-
-Option 1: Logistic Regression
-
-Penalties are l1, l2, elasticnet or none. Default is l2
-Solvers can be chosen according to the penalty added. They are: 
-newton-cg - [l2, none]
-lbfgs - [l2, none]
-liblinear - [l1, l2]
-sag - [l2, none]
-saga - [elasticnet, l1, l2, none]
-
-classifier=LogisticRegression(penalty='l2',random_state=0,solver='newton-cg')
-
-Option 2: Decision Tree
-
-classifier=DecisionTreeClassifier(criterion='entropy',random_state=0)
-
-Option 3: Naive Bayes
-
-classifier=GaussianNB()
-
-Option 4: Random Forest Ensemble Classifier
-
-Ensemble of decision trees. If bootstrap=True (default), each tree uses a sub-sample of the total sample size, where the
-size of the sub-samples is controled with max_samples (default='None', corresponding to X.shape[0] samples). Otherwise, 
-if bootstrap=False , the whole dataset is used to build each tree. n_estimators is the number of decision trees. Default 
-number is 100. criterion can be gini (default) or entropy.
-
-classifier=RandomForestClassifier(max_samples='None', bootstrap='True', n_estimators=100)
-
-"""
-
 classifier_lr_pure=LogisticRegression(penalty='none',random_state=0,solver='newton-cg')
 classifier_lr_l2=LogisticRegression(penalty='l2',random_state=0,solver='newton-cg')
 classifier_lr_l1=LogisticRegression(penalty='l1',random_state=0,solver='liblinear')
-classifier_lr_elasticnet=LogisticRegression(penalty='elasticnet',random_state=0,solver='sag')
 classifier_decision_trees=DecisionTreeClassifier(criterion='entropy',random_state=0)
 classifier_naive_bayes=GaussianNB()
 classifier_naive_bayes_bernoulli=BernoulliNB()
 
-
-
-
-"""
-
-Using K-Fold Cross Validation method
-
-"""
+# Using K-Fold Cross Validation method
 
 cv_number=20
 
