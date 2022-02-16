@@ -119,7 +119,7 @@ pyplot.xlabel('False Positive Rate')
 pyplot.ylabel('True Positive Rate')
 pyplot.legend()
 pyplot.tight_layout()
-pyplot.savefig("../figures/comparison_scaling_sensitive_methods.pdf")
+pyplot.savefig("../figures/comparison_knn_svc_methods.pdf")
 
 fig, ax =plt.subplots(figsize=(12,4))
 ax.axis('tight')

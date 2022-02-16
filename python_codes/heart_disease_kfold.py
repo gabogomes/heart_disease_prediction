@@ -99,7 +99,9 @@ for classifier in classifier_list:
     scores_list.append(scores_roc_auc_mean)
     scores_list.append(scores_roc_auc_std)
 
-results_summary={'Mean accuracy': scores_list[0:len(scores_list)-7:8], 'Mean accuracy std dev': scores_list[1:len(scores_list)-6:8],
+models_list=['Pure Logistic Regression', 'L1 Logistic Regression', 'L2 Logistic Regression', 'Decision Tree', 'Gaussian Naive Bayes', 'Bernoulli Naive Bayes']
+
+results_summary={'Model': models_list, 'Mean accuracy': scores_list[0:len(scores_list)-7:8], 'Mean accuracy std dev': scores_list[1:len(scores_list)-6:8],
 'Mean F1 score': scores_list[2:len(scores_list)-5:8], 'Mean F1 std dev': scores_list[3:len(scores_list)-4:8], 
 'Mean Neg Log Loss score': scores_list[4:len(scores_list)-3:8], 'Mean Neg Log Loss std dev': scores_list[5:len(scores_list)-2:8],
 'Mean ROC AUC score': scores_list[6:len(scores_list)-1:8], 'Mean ROC AUC std dev': scores_list[7:len(scores_list):8]}
