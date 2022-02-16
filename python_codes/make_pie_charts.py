@@ -42,6 +42,7 @@ counter_sex_female=len(dataset[dataset["Sex"] == 'F'].index)
 sizes_sex=[counter_sex_male,counter_sex_female]
 
 labels_chest_pain_type=['Typical Angina', 'Atypical Angina', 'Non-Anginal Pain', 'Asymp.']
+labels_chest_pain_type_unique=['Typical Angina', 'Atypical Angina', 'Non-Anginal Pain', 'Asymptomatic']
 counter_chest_pain_type_ta=len(dataset[dataset["ChestPainType"] == 'TA'].index)
 counter_chest_pain_type_ata=len(dataset[dataset["ChestPainType"] == 'ATA'].index)
 counter_chest_pain_type_nap=len(dataset[dataset["ChestPainType"] == 'NAP'].index)
@@ -49,6 +50,7 @@ counter_chest_pain_type_asy=len(dataset[dataset["ChestPainType"] == 'ASY'].index
 sizes_chest_pain=[counter_chest_pain_type_ta,counter_chest_pain_type_ata,counter_chest_pain_type_nap,counter_chest_pain_type_asy]
 
 labels_resting_ECG=['Normal', 'ST-T abn.', 'Left Vent. Hyp.']
+labels_resting_ECG_unique=['Normal', 'ST-T abnormality', 'Left Ventricular Hypertrophy']
 counter_resting_ECG_normal=len(dataset[dataset["RestingECG"] == 'Normal'].index)
 counter_resting_ECG_ST=len(dataset[dataset["RestingECG"] == 'ST'].index)
 counter_resting_ECG_LVH=len(dataset[dataset["RestingECG"] == 'LVH'].index)
@@ -87,14 +89,14 @@ plt.savefig("../results/charts/sex_pie_chart.pdf")
 
 fig, ax = plt.subplots(1,1)
 
-ax.pie(sizes_chest_pain, labels=labels_chest_pain_type, autopct='%1.2f%%', shadow=True, startangle=90)
+ax.pie(sizes_chest_pain, labels=labels_chest_pain_type_unique, autopct='%1.2f%%', shadow=True, startangle=90)
 ax.axis('equal')
 plt.tight_layout()
 plt.savefig("../results/charts/chest_pain_type_pie_chart.pdf")
 
 fig, ax = plt.subplots(1,1)
 
-ax.pie(sizes_ECG, labels=labels_resting_ECG, autopct='%1.2f%%', shadow=True, startangle=90)
+ax.pie(sizes_ECG, labels=labels_resting_ECG_unique, autopct='%1.2f%%', shadow=True, startangle=90)
 ax.axis('equal')
 plt.tight_layout()
 plt.savefig("../results/charts/Resting_ECG_pie_chart.pdf")
