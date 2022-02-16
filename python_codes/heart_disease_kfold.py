@@ -100,10 +100,58 @@ classifier=RandomForestClassifier(max_samples='None', bootstrap='True', n_estima
 
 """
 
-n_neighbors=20
-weights='uniform' # uniform or distance
+classifier_lr_pure=LogisticRegression(penalty='none',random_state=0,solver='newton-cg')
+classifier_lr_l2=LogisticRegression(penalty='l2',random_state=0,solver='newton-cg')
+classifier_lr_l1=LogisticRegression(penalty='l1',random_state=0,solver='liblinear')
+classifier_lr_elasticnet=LogisticRegression(penalty='elasticnet',random_state=0,solver='sag')
+classifier_decision_trees=DecisionTreeClassifier(criterion='entropy',random_state=0)
+classifier_naive_bayes=GaussianNB()
 
-classifier=neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
+
+
+
+"""
+
+Using K-Fold Cross Validation method
+
+"""
+
+cv_number=20
+
+classifier_list=[classifier_lr_pure, classifier_lr_l1, classifier_lr_l2, classifier_decision_trees, classifier_naive_bayes]
+
+scores_list=[]
+
+for classifier in classifier_list:
+
+    scores_accuracy_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="accuracy")).mean()
+    scores_accuracy_std=(cross_val_score(classifier, x, y, cv=cv_number, scoring="accuracy")).std()
+    scores_f1_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="f1")).mean()
+    scores_f1_std=(cross_val_score(classifier, x, y, cv=cv_number, scoring="f1")).std()
+    scores_neg_log_loss_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="neg_log_loss")).mean()
+    scores_neg_log_loss_std=(cross_val_score(classifier, x, y, cv=cv_number, scoring="neg_log_loss")).std()
+    scores_roc_auc_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="roc_auc")).mean()
+    scores_roc_auc_std=(cross_val_score(classifier, x, y, cv=cv_number, scoring="roc_auc")).std()
+
+    scores_list.append(scores_accuracy_mean)
+    scores_list.append(scores_accuracy_std)
+    scores_list.append(scores_f1_mean)
+    scores_list.append(scores_f1_std)
+    scores_list.append(scores_neg_log_loss_mean)
+    scores_list.append(scores_neg_log_loss_std)
+    scores_list.append(scores_roc_auc_mean)
+    scores_list.append(scores_roc_auc_std)
+
+results_summary={'Mean accuracy': scores_list[0:len(scores_list)-7:8], 'Mean accuracy std dev': scores_list[1:len(scores_list)-6:8],
+'Mean F1 score': scores_list[2:len(scores_list)-5:8], 'Mean F1 std dev': scores_list[3:len(scores_list)-4:8], 
+'Mean Neg Log Loss score': scores_list[4:len(scores_list)-3:8], 'Mean Neg Log Loss std dev': scores_list[5:len(scores_list)-2:8],
+'Mean ROC AUC score': scores_list[6:len(scores_list)-1:8], 'Mean ROC AUC std dev': scores_list[7:len(scores_list):8]}
+
+results_dataset_summary=pd.DataFrame(data=results_summary, index=['Pure Linear', 'L1 LR', 'L2 LR', 'Decision Trees', 'Gaussian NB'])
+
+print(results_dataset_summary)
+
+""" Evaluating model performance without cross validation
 
 # Training the model with the training dataset
 
@@ -112,21 +160,6 @@ classifier.fit(x_train,y_train)
 # Using trained model to test the predictions on the test dataset
 
 y_pred=classifier.predict(x_test)
-
-# Evaluating model performance
-
-"""
-
-Confusion matrix is composed by:
-
- [True positives   False positives]
- [False negatives   True negatives]
-
- Accuracy = (True positives + True negatives) / (True positives + True negatives + False positives + False negatives)
-
- ROC AUC = Receiver Operating Characteristics Area Under Curve. We also plot the ROC Curve
-
-"""
 
 cm=confusion_matrix(y_test,y_pred)
 model_accuracy=accuracy_score(y_test,y_pred)
@@ -151,25 +184,3 @@ pyplot.show()
 # print(np.concatenate((y_pred.reshape(len(y_pred),1),y_test.reshape(len(y_test),1)),1))
 
 """
-
-Up to now, we considered one single training process with 80% of the total dataset. We will now
-consider a technique to refine our analysis. It is called K-Fold Cross Validation. Basically, it
-consists in separating the dataset in K groups. The data contained in the training set change, as
-well as the data contained in the test set. This can be done with the model selection method of the
-SKLearn package, as below. We will use both the accuracy and the F1 score to evaluate model performance.
-
-"""
-
-cv_number=20
-
-scores_accuracy_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="accuracy")).mean()
-scores_accuracy_std=(cross_val_score(classifier, x, y, cv=cv_number, scoring="accuracy")).std()
-
-
-scores_f1_mean=(cross_val_score(classifier, x, y, cv=cv_number, scoring="f1")).mean()
-scores_f1_std=(cross_val_score(classifier, x, y, cv=cv_number, scoring="f1")).std()
-
-print("Accuracy mean and standard deviation of K-Fold Cross Validation procedure:")
-print(scores_accuracy_mean,scores_accuracy_std)
-print("F1 mean and standard deviation of K-Fold Cross Validation procedure:")
-print(scores_f1_mean,scores_f1_std)
