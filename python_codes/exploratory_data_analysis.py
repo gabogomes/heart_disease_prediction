@@ -71,5 +71,6 @@ ax3.hist(x[:,[9]], number_of_bins, histtype='bar', label='Maximum Heart Rate')
 ax3.set_ylabel("Number of people")
 ax3.set_xlabel("Maximum Heart Rate")
 
-fig.tight_layout()
-plt.show()
+plt.tight_layout()
+
+plt.savefig("../figures/histogram_continuous_variables.pdf")
