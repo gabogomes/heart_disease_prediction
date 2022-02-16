@@ -56,6 +56,12 @@ counter_resting_ECG_ST=len(dataset[dataset["RestingECG"] == 'ST'].index)
 counter_resting_ECG_LVH=len(dataset[dataset["RestingECG"] == 'LVH'].index)
 sizes_ECG=[counter_resting_ECG_normal,counter_resting_ECG_ST,counter_resting_ECG_LVH]
 
+labels_heart_disease=['Heart Disease', 'Normal']
+counter_heart_disease_yes=len(dataset[dataset["HeartDisease"] == 1].index)
+counter_heart_disease_no=len(dataset[dataset["HeartDisease"] == 0].index)
+sizes_heart_disease=[counter_heart_disease_yes,counter_heart_disease_no]
+
+
 
 fig, ((ax0, ax1), (ax2, ax3)) = plt.subplots(nrows=2, ncols=2)
 
@@ -120,3 +126,15 @@ ax.legend(labels_resting_ECG_unique,
 
 plt.tight_layout()
 plt.savefig("../results/charts/Resting_ECG_pie_chart.pdf")
+
+fig, ax = plt.subplots(1,1)
+
+ax.pie(sizes_heart_disease, autopct='%1.2f%%', shadow=True, startangle=90)
+ax.axis('equal')
+ax.set_title('Heart Disease')
+ax.legend(labels_heart_disease,
+          title="Heart Disease categories",
+          loc="lower right")
+
+plt.tight_layout()
+plt.savefig("../results/charts/heart_disease_pie_chart.pdf")
