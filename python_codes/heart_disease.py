@@ -33,8 +33,8 @@ Age , Sex , Chest Pain Type , Resting BP , Cholesterol , Fasting BS , Resting EC
 
 """
 
-# Parameters Sex and Exercise Angina are binary data but are not given in numerical values, as 
-# it is the case of Fasting BS. We need to use label encoding to transform them
+# Parameters Sex and Exercise Angina are binary data but are not given in numerical values, differently from
+# the case of Fasting BS. We need to use label encoding to transform them
 
 dataset["Sex"]=LabelEncoder().fit_transform(dataset["Sex"])
 dataset["ExerciseAngina"]=LabelEncoder().fit_transform(dataset["ExerciseAngina"])
@@ -89,25 +89,7 @@ Option 3: Naive Bayes
 
 classifier=GaussianNB()
 
-Option 4: K Nearest Neighbors
-
-n_neighbors=5
-weights='uniform' # uniform or distance
-
-classifier=neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
-
-Option 5: Support Vector Machine Classifier
-
-Several kernel options, such as:
-linear
-poly
-rbf (standard if none is given)
-sigmoid
-precomputed
-
-classifier=svm.SVC(probability=True, kernel='rbf')
-
-Option 6: Random Forest Ensemble Classifier
+Option 4: Random Forest Ensemble Classifier
 
 Ensemble of decision trees. If bootstrap=True (default), each tree uses a sub-sample of the total sample size, where the
 size of the sub-samples is controled with max_samples (default='None', corresponding to X.shape[0] samples). Otherwise, 
