@@ -34,6 +34,14 @@ Age , Sex , Chest Pain Type , Resting BP , Cholesterol , Fasting BS , Resting EC
 dataset["Sex"]=LabelEncoder().fit_transform(dataset["Sex"])
 dataset["ExerciseAngina"]=LabelEncoder().fit_transform(dataset["ExerciseAngina"])
 
+# Taking out samples for which cholesterol and resting BP value were zero
+
+cholesterol_threshold=0.0        # 85.0
+bp_threshold=0.0                 # 80.0
+
+dataset=dataset[dataset["Cholesterol"] > cholesterol_threshold]
+dataset=dataset[dataset["RestingBP"] > bp_threshold]
+
 # Transform dataset from pandas dataframe into array for data preprocessing and 
 # application of ML algorithms
 
