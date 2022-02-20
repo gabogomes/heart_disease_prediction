@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_curve, roc_auc_score
+from sklearn.metrics import roc_curve, roc_auc_score, accuracy_score, f1_score, precision_score, recall_score
 from sklearn import neighbors
 from sklearn import svm
 from matplotlib import pyplot
@@ -91,6 +91,10 @@ labels=['k-NN uniform', 'k-NN distance', 'SVC Linear', 'SVC RBF', 'SVC Sigmoid']
 
 iflag=0
 roc_auc_store=[]
+accuracy_store=[]
+f1_store=[]
+precision_store=[]
+recall_store=[]
 
 for classifier in [classifier_knn_uniform, classifier_knn_distance, classifier_svc_linear, classifier_svc_rbf, classifier_svc_sigmoid]:
 
@@ -106,10 +110,14 @@ for classifier in [classifier_knn_uniform, classifier_knn_distance, classifier_s
     classifier_roc_auc=roc_auc_score(y_test,classifier_probs[:,1]) # We use column one to choose only the probability values of the positive outcome
     roc_auc_store.append(classifier_roc_auc)
     model_roc_curve_fpr , model_roc_curve_tpr , _ = roc_curve(y_test,classifier_probs[:,1])
+    accuracy_store.append(accuracy_score(y_test, y_pred))
+    f1_store.append(f1_score(y_test, y_pred))
+    precision_store.append(precision_score(y_test, y_pred)) # average = ‘micro’, ‘macro’, ‘samples’, ‘weighted’, ‘binary’} or None, default=’binary’
+    recall_store.append(recall_score(y_test, y_pred)) # average = ‘micro’, ‘macro’, ‘samples’, ‘weighted’, ‘binary’} or None, default=’binary’
     pyplot.plot(model_roc_curve_fpr, model_roc_curve_tpr, '--o',label=labels[iflag])
     iflag+=1
 
-roc_summary={'Model': labels, 'ROC AUC': roc_auc_store}
+roc_summary={'Model': labels, 'ROC AUC': roc_auc_store, 'Accuracy': accuracy_store, 'F1 score': f1_store, 'Precision': precision_store, 'Recall': recall_store}
 
 roc_summary_df=pd.DataFrame(data=roc_summary)
 

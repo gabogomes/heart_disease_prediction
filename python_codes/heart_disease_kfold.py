@@ -13,17 +13,45 @@ dataset=pd.read_csv("../dataset/heart_disease_data.csv")
 
 """
 
-Age: age of the patient [years]
-Sex: sex of the patient [M: Male, F: Female]
-ChestPainType: chest pain type [TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic]
-RestingBP: resting blood pressure [mm Hg]
-Cholesterol: serum cholesterol [mm/dl]
-FastingBS: fasting blood sugar [1: if FastingBS > 120 mg/dl, 0: otherwise]
+Age: age of the patient [years] - > if age > 45 higher risk (non-linear but isotonic) - Infarction with ST-Slope [Up] is +- 55 - 65 years old for men / without Up Slope for 10
+years after than positive
+
+Sex: sex of the patient [M: Male, F: Female] - > related to the age (men have infarction earlier than woman, 10 years before +-)
+
+ChestPainType: chest pain type [TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic] 
+[n1 n2 [n3] n4] -> transform from one-hot to label encoder)
+
+n1 > n2 > n3 > n4 (n4 is probably zero)
+
+Verificar a proporção e a partir disso inserir pesos
+
+=> Anterior
+
+[1 0 0 0]
+[0 1 0 0]
+[0 0 1 0]
+[0 0 0 1]
+
+=> Binarizar as variáveis continuas e ver o efeito
+
+RestingBP: resting blood pressure [mm Hg] - > Patients with higher RBP are biased to infarction (90 is lower limiting value, < 80 have bigger
+chance of infarction). Higher than 120 is also a risk factor (linear)
+
+Cholesterol: serum cholesterol [mm/dl] - > 180 mg/dl + indicative of heart problem (check if this is sum of VLDL + LDL => LDLT = 30 + LDL),
+HDL < 40 is also a risk for heart problem 
+
+FastingBS: fasting blood sugar [1: if FastingBS > 120 mg/dl, 0: otherwise] - > May not be correlated to heart problem (+ 126 is the diagnosis for diabetes)
+
 RestingECG: resting electrocardiogram results [Normal: Normal, ST: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV), LVH: showing probable or definite left ventricular hypertrophy by Estes' criteria]
-MaxHR: maximum heart rate achieved [Numeric value between 60 and 202]
-ExerciseAngina: exercise-induced angina [Y: Yes, N: No]
+
+MaxHR: maximum heart rate achieved [Numeric value between 60 and 202] (To be explored, > X (X not known yet) may have bigger chance of heart disease)
+
+ExerciseAngina: exercise-induced angina [Y: Yes, N: No] (Give bigger weights in model training, same weight as ST Slope)
+
 Oldpeak: oldpeak = ST [Numeric value measured in depression]
-ST_Slope: the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]
+
+ST_Slope: the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping] (investigar o peso w nessa variável)
+
 HeartDisease: output class [1: heart disease, 0: Normal]
 
 Age , Sex , Chest Pain Type , Resting BP , Cholesterol , Fasting BS , Resting ECG , Max HR , Exercise Angina , Oldpeak , ST_Slope , Heart Disease
