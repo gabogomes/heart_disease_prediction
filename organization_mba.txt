@@ -1,0 +1,9 @@
+Organization:
+
+1) Models without and with scaling, one run and compare ROC AUC plots;
+
+2) Models without scaling, several runs and average over k-fold Cross Validation;
+
+3) Multi-layer perceptron model;
+
+4) Neural Network using different number of layers, probably can use grid search for hyperparameter tuning.
